@@ -6,7 +6,7 @@ Config.WipeInventoryOnRespawn = true
 Config.Locations = {
     ["checking"] = {
 	    [1] = vector3(308.19, -595.35, 43.29),
-	    [2] = vector3(-254.54, 6331.78, 32.43), -- paleto
+	    [2] = vector3(-254.54, 6331.78, 32.43), -- paleto test
     },
     ["duty"] = {
         [1] = vector3(311.18, -599.25, 43.29),
