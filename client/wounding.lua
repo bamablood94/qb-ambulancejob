@@ -6,7 +6,8 @@ local painkillerAmount = 0
 
 local function DoBleedAlert()
     if not isDead and tonumber(isBleeding) > 0 then
-        QBCore.Functions.Notify("You are "..Config.BleedingStates[tonumber(isBleeding)].label, "error", 5000)
+        --QBCore.Functions.Notify("You are "..Config.BleedingStates[tonumber(isBleeding)].label, "error", 5000)
+        exports['okokNotify']:Alert('Bleeding Out', 'You are '..Config.BleedingStates[tonumber(isBleeding)].label, 5000, 'ambulance')
     end
 end
 
@@ -61,7 +62,8 @@ RegisterNetEvent('hospital:client:UseIfaks', function()
         end
     end, function() -- Cancel
         StopAnimTask(ped, "mp_suicide", "pill", 1.0)
-        QBCore.Functions.Notify(Lang:t('error.canceled'), "error")
+        --QBCore.Functions.Notify(Lang:t('error.canceled'), "error")
+        exports['okokNotify']:Alert('Canceled', Lang:t('error.canceled'), 3000, 'error')
     end)
 end)
 
@@ -89,7 +91,8 @@ RegisterNetEvent('hospital:client:UseBandage', function()
         end
     end, function() -- Cancel
         StopAnimTask(ped, "anim@amb@business@weed@weed_inspecting_high_dry@", "weed_inspecting_high_base_inspector", 1.0)
-        QBCore.Functions.Notify(Lang:t('error.canceled'), "error")
+        --QBCore.Functions.Notify(Lang:t('error.canceled'), "error")
+        exports['okokNotify']:Alert('Canceled', Lang:t('error.canceled'), 3000, 'error')
     end)
 end)
 
@@ -114,7 +117,8 @@ RegisterNetEvent('hospital:client:UsePainkillers', function()
         end
     end, function() -- Cancel
         StopAnimTask(ped, "mp_suicide", "pill", 1.0)
-        QBCore.Functions.Notify(Lang:t('error.canceled'), "error")
+        --QBCore.Functions.Notify(Lang:t('error.canceled'), "error")
+        exports['okokNotify']:Alert('Canceled', Lang:t('error.canceled'), 3000, 'error')
     end)
 end)
 

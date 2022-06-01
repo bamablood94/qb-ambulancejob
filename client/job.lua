@@ -189,7 +189,8 @@ RegisterNetEvent('hospital:client:CheckStatus', function()
                             args = {Lang:t('info.status'), Lang:t('info.is_status', {status = Config.BleedingStates[v].label})}
                         })
                     else
-                        QBCore.Functions.Notify(Lang:t('success.healthy_player'), 'success')
+                        --QBCore.Functions.Notify(Lang:t('success.healthy_player'), 'ambulance')
+                        exports['okokNotify']:Alert('Healthy', Lang:t('success.healthy_player'), 3000, 'ambulance')
                     end
                 end
                 isStatusChecking = true
@@ -197,7 +198,8 @@ RegisterNetEvent('hospital:client:CheckStatus', function()
             end
         end, playerId)
     else
-        QBCore.Functions.Notify(Lang:t('error.no_player'), 'error')
+        --QBCore.Functions.Notify(Lang:t('error.no_player'), 'error')
+        exports['okokNotify']:Alert('No one Nearby', Lang:t('error.no_player'), 3000, 'ambulance')
     end
 end)
 
@@ -220,18 +222,22 @@ RegisterNetEvent('hospital:client:RevivePlayer', function()
                 }, {}, {}, function() -- Done
                     isHealingPerson = false
                     StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
-                    QBCore.Functions.Notify(Lang:t('success.revived'), 'success')
+                    --QBCore.Functions.Notify(Lang:t('success.revived'), 'ambulance')
+                    exports['okokNotify']:Alert('Revived', Lang:t('success.revived'), 3000, 'ambulance')
                     TriggerServerEvent("hospital:server:RevivePlayer", playerId)
                 end, function() -- Cancel
                     isHealingPerson = false
                     StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
-                    QBCore.Functions.Notify(Lang:t('error.cancled'), "error")
+                    --QBCore.Functions.Notify(Lang:t('error.canceled'), "error")
+                    exports['okokNotify']:Alert('Canceled', Lang:t('error.canceled'), 'ambulance')
                 end)
             else
-                QBCore.Functions.Notify(Lang:t('error.no_player'), "error")
+                --QBCore.Functions.Notify(Lang:t('error.no_player'), "error")
+                exports['okokNotify']:Alert('No one Nearby', Lang:t('error.no_player'), 3000, 'ambulance')
             end
         else
-            QBCore.Functions.Notify(Lang:t('error.no_firstaid'), "error")
+            --QBCore.Functions.Notify(Lang:t('error.no_firstaid'), "error")
+            exports['okokNotify']:Alert('Missing Item', Lang:t('error.no_firstaid'), 3000, 'ambulance')
         end
     end, 'firstaid')
 end)
@@ -255,18 +261,22 @@ RegisterNetEvent('hospital:client:TreatWounds', function()
                 }, {}, {}, function() -- Done
                     isHealingPerson = false
                     StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
-                    QBCore.Functions.Notify(Lang:t('success.helped_player'), 'success')
+                    --QBCore.Functions.Notify(Lang:t('success.helped_player'), 'ambulance')
+                    exports['okokNotify']:Alert('Helped', Lang:t('success.helped_player'), 3000, 'ambulance')
                     TriggerServerEvent("hospital:server:TreatWounds", playerId)
                 end, function() -- Cancel
                     isHealingPerson = false
                     StopAnimTask(PlayerPedId(), healAnimDict, "exit", 1.0)
-                    QBCore.Functions.Notify(Lang:t('error.canceled'), "error")
+                    --QBCore.Functions.Notify(Lang:t('error.canceled'), "error")
+                    exports['okokNotify']:Alert('Canceled', Lang:t('error.canceled'), 'ambulance')
                 end)
             else
-                QBCore.Functions.Notify(Lang:t('error.no_player'), "error")
+                --QBCore.Functions.Notify(Lang:t('error.no_player'), "error")
+                exports['okokNotify']:Alert('No one Nearby', Lang:t('error.no_player'), 3000, 'ambulance')
             end
         else
-            QBCore.Functions.Notify(Lang:t('error.no_bandage'), "error")
+            --QBCore.Functions.Notify(Lang:t('error.no_bandage'), "error")
+            exports['okokNotify']:Alert('Missing Item', Lang:t('error.no_bandage'), 3000, 'ambulance')
         end
     end, 'bandage')
 end)

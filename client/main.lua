@@ -102,14 +102,16 @@ local function DoLimbAlert()
             else
                 limbDamageMsg = Lang:t('info.many_places')
             end
-            QBCore.Functions.Notify(limbDamageMsg, "primary")
+            --QBCore.Functions.Notify(limbDamageMsg, "primary")
+            exports['okokNotify']:Alert('Limb Damage', limbDamageMsg, 3000, 'ambulance')
         end
     end
 end
 
 local function DoBleedAlert()
     if not isDead and tonumber(isBleeding) > 0 then
-        QBCore.Functions.Notify(Lang:t('info.bleed_alert', {bleedstate = Config.BleedingStates[tonumber(isBleeding)].label}), "error")
+        --QBCore.Functions.Notify(Lang:t('info.bleed_alert', {bleedstate = Config.BleedingStates[tonumber(isBleeding)].label}), "error")
+        exports['okokNotify']:Alert('Bleeding', Lang:t('info.bleed_alert', {bleedstate = Config.BleedingStates[tonumber(isBleeding)].label}), 3000, 'ambulance')
     end
 end
 
@@ -527,7 +529,8 @@ RegisterNetEvent('hospital:client:ambulanceAlert', function(coords, text)
     local street1, street2 = GetStreetNameAtCoord(coords.x, coords.y, coords.z)
     local street1name = GetStreetNameFromHashKey(street1)
     local street2name = GetStreetNameFromHashKey(street2)
-    QBCore.Functions.Notify({text = text, caption = street1name.. ' ' ..street2name}, 'ambulance')
+    --QBCore.Functions.Notify({text = text, caption = street1name.. ' ' ..street2name}, 'ambulance')
+    exports['okokNotify']:Alert('Ambulance Alert!', {text = text, caption = street1name.. ' ' ..street2name}, 10000, 'ambulance')
     PlaySound(-1, "Lose_1st", "GTAO_FM_Events_Soundset", 0, 0, 1)
     local transG = 250
     local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
@@ -590,7 +593,8 @@ RegisterNetEvent('hospital:client:Revive', function()
     TriggerServerEvent("hospital:server:SetDeathStatus", false)
     TriggerServerEvent("hospital:server:SetLaststandStatus", false)
     emsNotified = false
-    QBCore.Functions.Notify(Lang:t('info.healthy'))
+    --QBCore.Functions.Notify(Lang:t('info.healthy'))
+    exports['okokNotify']:Alert('Healthy', Lang:t('info.healthy'), 3000, 'ambulance')
 end)
 
 RegisterNetEvent('hospital:client:SetPain', function()
@@ -632,7 +636,8 @@ RegisterNetEvent('hospital:client:HealInjuries', function(type)
         ResetPartial()
     end
     TriggerServerEvent("hospital:server:RestoreWeaponDamage")
-    QBCore.Functions.Notify(Lang:t('success.wounds_healed'), 'success')
+    --QBCore.Functions.Notify(Lang:t('success.wounds_healed'), 'ambulance')
+    exports['okokNotify']:Alert('Healed', Lang:t('success.wounds_healed'), 3000, 'ambulance')
 end)
 
 RegisterNetEvent('hospital:client:SendToBed', function(id, data, isRevive)
@@ -642,7 +647,8 @@ RegisterNetEvent('hospital:client:SendToBed', function(id, data, isRevive)
     CreateThread(function ()
         Wait(5)
         if isRevive then
-            QBCore.Functions.Notify(Lang:t('success.being_helped'), 'success')
+            --QBCore.Functions.Notify(Lang:t('success.being_helped'), 'ambulance')
+            exports['okokNotify']:Alert('Being Helped', Lang:t('success.being_helped'), 3000, 'ambulance')
             Wait(Config.AIHealTimer * 1000)
             TriggerEvent("hospital:client:Revive")
         else
@@ -856,11 +862,13 @@ RegisterNetEvent('qb-ambulancejob:checkin', function()
             if bedId then
                 TriggerServerEvent("hospital:server:SendToBed", bedId, true)
             else
-                QBCore.Functions.Notify(Lang:t('error.beds_taken'), "error")
+                --QBCore.Functions.Notify(Lang:t('error.beds_taken'), "error")
+                exports['okokNotify']:Alert('Beds Taken', Lang:t('error.beds_taken'), 3000, 'ambulance')
             end
         end, function() -- Cancel
             TriggerEvent('animations:client:EmoteCommandStart', {"c"})
-            QBCore.Functions.Notify(Lang:t('error.canceled'), "error")
+            --QBCore.Functions.Notify(Lang:t('error.canceled'), "error")
+            exports['okokNotify']:Alert('Canceled', Lang:t('error.canceled'), 3000, 'error')
         end)
     end
 end)
@@ -869,7 +877,8 @@ RegisterNetEvent('qb-ambulancejob:beds', function()
     if GetAvailableBed(closestBed) then
         TriggerServerEvent("hospital:server:SendToBed", closestBed, false)
     else
-        QBCore.Functions.Notify(Lang:t('error.beds_taken'), "error")
+        --QBCore.Functions.Notify(Lang:t('error.beds_taken'), "error")
+        exports['okokNotify']:Alert('Beds Taken', Lang:t('error.beds_taken'), 3000, 'ambulance')
     end
 end)
 

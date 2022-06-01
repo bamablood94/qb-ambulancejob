@@ -93,7 +93,8 @@ function SetLaststand(bool, spawn)
                     LaststandTime = LaststandTime - 1
                     Config.DeathTime = LaststandTime
                 elseif LaststandTime - 1 <= 0 then
-                    QBCore.Functions.Notify(Lang:t('error.bled_out'), "error")
+                    --QBCore.Functions.Notify(Lang:t('error.bled_out'), "error")
+                    exports['okokNotify']:Alert('Bled Out', Lang:t('error.bled_out'), 3000, 'ambulance')
                     SetLaststand(false)
                     local killer_2, killerWeapon = NetworkGetEntityKillerOfPlayer(player)
                     local killer = GetPedSourceOfDeath(ped)
@@ -145,7 +146,8 @@ RegisterNetEvent('hospital:client:UseFirstAid', function()
             TriggerServerEvent('hospital:server:UseFirstAid', playerId)
         end
     else
-        QBCore.Functions.Notify(Lang:t('error.impossible'), 'error')
+        --QBCore.Functions.Notify(Lang:t('error.impossible'), 'error')
+        exports['okokNotify']:Alert('Impossible', Lang:t('error.impossible'), 3000, 'error')
     end
 end)
 
@@ -176,11 +178,13 @@ RegisterNetEvent('hospital:client:HelpPerson', function(targetId)
     }, {}, {}, function() -- Done
         isHealingPerson = false
         ClearPedTasks(ped)
-        QBCore.Functions.Notify(Lang:t('success.revived'), 'success')
+        --QBCore.Functions.Notify(Lang:t('success.revived'), 'ambulance')
+        exports['okokNotify']:Alert('Revived', Lang:t('success.revived'), 'ambulance')
         TriggerServerEvent("hospital:server:RevivePlayer", targetId)
     end, function() -- Cancel
         isHealingPerson = false
         ClearPedTasks(ped)
-        QBCore.Functions.Notify(Lang:t('error.canceled'), "error")
+        --QBCore.Functions.Notify(Lang:t('error.canceled'), "error")
+        exports['okokNotify']:Alert('Canceled', Lang:t('error.canceled'), 3000, 'error')
     end)
 end)
