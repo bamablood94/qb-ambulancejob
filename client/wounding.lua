@@ -144,7 +144,7 @@ CreateThread(function()
 	while true do
 		if #injured > 0 then
 			local level = 0
-			for k, v in pairs(injured) do
+			for _, v in pairs(injured) do
 				if v.severity > level then
 					level = v.severity
 				end
